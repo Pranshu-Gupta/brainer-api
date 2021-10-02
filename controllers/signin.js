@@ -22,7 +22,7 @@ const handleSignin = (db, bcrypt) => (req, res) => {
       }
     })
     .catch((err) =>
-      res.status(400).json('User does not exist, kindly register!')
+      res.status(401).json('User does not exist, kindly register!')
     );
 };
 
