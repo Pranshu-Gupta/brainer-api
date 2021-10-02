@@ -21,9 +21,7 @@ const handleSignin = (db, bcrypt) => (req, res) => {
         res.status(400).json('wrong credentials');
       }
     })
-    .catch((err) =>
-      res.status(401).json('User does not exist, kindly register!')
-    );
+    .catch((err) => res.status(400).json('wrong credentials'));
 };
 
 module.exports = {
