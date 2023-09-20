@@ -12,7 +12,7 @@ const image = require('./controllers/image');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const db = knex({
   client: 'pg',
-  connection: process.env.CONNECTION_STRING,
+  connection: 'postgres://zysymzgm:c_BPFU6rnOCcJrwQraP66UniHgSRf5Nk@silly.db.elephantsql.com/zysymzgm',
   searchPath: ['knex', 'public'],
 });
 
