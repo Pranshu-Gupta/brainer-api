@@ -13,7 +13,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const db = knex({
   client: 'pg',
   connection: {
-    connection: 'postgres://zysymzgm:c_BPFU6rnOCcJrwQraP66UniHgSRf5Nk@silly.db.elephantsql.com/zysymzgm',
+    connectionString: 'postgres://zysymzgm:c_BPFU6rnOCcJrwQraP66UniHgSRf5Nk@silly.db.elephantsql.com/zysymzgm',
     host: 'silly.db.elephantsql.com',
     port: 5432,
     user: 'zysymzgm',
@@ -30,11 +30,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+db.raw("SELECT 1").then(() => {
+    console.log("PostgreSQL connected");
+})
+.catch((e) => {
+    console.log("PostgreSQL not connected");
+    console.error(e);
+});
+
 app.get('/', (req, res) => {
   res.send('it is working');
 });
 app.post('/signin', signin.handleSignin(db, bcrypt));
 app.post('/register', (req, res) => {
+  console.log(req);
   register.handleRegister(req, res, db, bcrypt);
 });
 app.get('/profile/:id', (req, res) => {
