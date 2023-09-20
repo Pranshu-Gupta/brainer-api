@@ -13,7 +13,12 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const db = knex({
   client: 'pg',
   connection: {
-    connectionString: process.env.DATABASE_URL,
+    connection: 'postgres://zysymzgm:c_BPFU6rnOCcJrwQraP66UniHgSRf5Nk@silly.db.elephantsql.com/zysymzgm',
+    host: 'silly.db.elephantsql.com',
+    port: 5432,
+    user: 'zysymzgm',
+    database: 'zysymzgm',
+    password: 'c_BPFU6rnOCcJrwQraP66UniHgSRf5Nk',
     ssl: {
       rejectUnauthorized: false,
     },
@@ -42,6 +47,7 @@ app.post('/imageurl', (req, res) => {
   image.handleApiCall(req, res);
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`App is running on ${process.env.PORT}!`);
+const port = process.env.PORT || 3000
+app.listen(port , () => {
+  console.log(`App is running on ${port}!`);
 });
