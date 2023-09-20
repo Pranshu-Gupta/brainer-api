@@ -12,17 +12,8 @@ const image = require('./controllers/image');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const db = knex({
   client: 'pg',
-  connection: {
-    connectionString: 'postgres://zysymzgm:c_BPFU6rnOCcJrwQraP66UniHgSRf5Nk@silly.db.elephantsql.com/zysymzgm',
-    host: 'silly.db.elephantsql.com',
-    port: 5432,
-    user: 'zysymzgm',
-    database: 'zysymzgm',
-    password: 'c_BPFU6rnOCcJrwQraP66UniHgSRf5Nk',
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  },
+  connection: process.env.CONNECTION_STRING,
+  searchPath: ['knex', 'public'],
 });
 
 const app = express();
