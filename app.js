@@ -12,12 +12,8 @@ const image = require('./controllers/image');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const db = knex({
   client: 'pg',
-  connection: {
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  },
+  connection: process.env.CONNECTION_STRING ,
+  searchPath: ['knex', 'public'],
 });
 
 const app = express();
@@ -25,11 +21,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+db.raw("SELECT 1").then(() => {
+    console.log("PostgreSQL connected");
+})
+.catch((e) => {
+    console.log("PostgreSQL not connected");
+    console.error(e);
+});
+
 app.get('/', (req, res) => {
   res.send('it is working');
 });
 app.post('/signin', signin.handleSignin(db, bcrypt));
 app.post('/register', (req, res) => {
+  console.log(req);
   register.handleRegister(req, res, db, bcrypt);
 });
 app.get('/profile/:id', (req, res) => {
@@ -42,10 +47,9 @@ app.post('/imageurl', (req, res) => {
   image.handleApiCall(req, res);
 });
 
-const port = process.env.PORT || 3000;
-
-app.listen(port, () => {
+const port = process.env.PORT || 4000
+app.listen(port , () => {
   console.log(`App is running on ${port}!`);
 });
 
-module.exports =  app;
+module.exports = app;
